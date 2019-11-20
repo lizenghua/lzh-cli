@@ -6,6 +6,8 @@ const download = require('download-git-repo')
 const inquirer = require('inquirer')
 const handlebars = require('handlebars')
 const fs = require('fs')
+const ora = require('ora')
+const spinner = ora('正在下载模板...')
 const templates = {
     'tpl-h5': {
         url: 'https://github.com/lizenghua/vue-tpl-h5',
@@ -28,18 +30,20 @@ program
     .description('初始化项目模板')
     .option("-s, --setup_mode [mode]", "Which setup mode to use")
     .action((templateName, projectName) => {
+        // 下载之前 loading 提示
+        spinner.start()
         // 根据模板名下载对应的模板到本地并起名为 projectName
         // params1: 仓库地址
         // params2: 下载路径
         const { downloadUrl } = templates[templateName]
         download(downloadUrl, projectName, { clone: true}, err => {
             if(err){
-                return console.log('下载失败');
+                spinner.fail() //下载失败
+                return ;
             }
+            spinner.succeed() //下载成功
             // 把项目下的 package.json 文件读取处理
             // 使用向导的方式采集用户输入的值
-            
-            
             inquirer.prompt([
                 {
                     type: 'input',
