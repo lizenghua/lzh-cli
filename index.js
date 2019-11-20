@@ -2,14 +2,17 @@
 // 使用 Node 开发命令行工具所执行的 JS 脚本必须在顶部加入 `#!/usr/bin/env node` 声明
 
 const program = require('commander');
+const download = require('download-git-repo')
 const templates = {
-    "tpl-h5": {
-        url: "https://github.com/lizenghua/vue-tpl-h5",
-        description: "H5模板"
+    'tpl-h5': {
+        url: 'https://github.com/lizenghua/vue-tpl-h5',
+        downloadUrl: 'https://github.com:lizenghua/vue-tpl-h5#master',
+        description: 'H5模板'
     },
-    "tpl-pc": {
-        url: "https://github.com/lizenghua/vue-tpl-pc",
-        description: "PC模板"
+    'tpl-pc': {
+        url: 'https://github.com/lizenghua/vue-tpl-pc',
+        downloadUrl: 'https://github.com:lizenghua/vue-tpl-pc#master',
+        description: 'PC模板'
     }
 }
 
@@ -24,8 +27,16 @@ program
     .option("-s, --setup_mode [mode]", "Which setup mode to use")
     .action((templateName, projectName) => {
         // 根据模板名下载对应的模板到本地并起名为 projectName
-        console.log(templateName);
-        console.log(projectName);
+        // params1: 仓库地址
+        // params2: 下载路径
+        const { downloadUrl } = templates[templateName]
+        download(downloadUrl, projectName, { clone: true}, err => {
+            if(err){
+                console.log('下载失败');
+            }else{
+                console.log('下载成功');
+            }
+        })
     })
 
 program

@@ -21,6 +21,7 @@
     "lzh": "index.js"
   },
   "dependencies": {
-    "commander": "^4.0.1"
+    "commander": "^4.0.1",
+    "download-git-repo": "^3.0.2"
   }
 }
