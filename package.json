@@ -1,0 +1,23 @@
+{
+  "name": "lzh-cli",
+  "version": "1.0.0",
+  "description": "个人搭建的vue简易脚手架工具",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lizenghua/lzh-cli.git"
+  },
+  "keywords": [],
+  "author": "lizenghua",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lizenghua/lzh-cli/issues"
+  },
+  "homepage": "https://github.com/lizenghua/lzh-cli#readme",
+  "bin": {
+    "lzh": "index.js"
+  }
+}
