@@ -3,6 +3,9 @@
 
 const program = require('commander');
 const download = require('download-git-repo')
+const inquirer = require('inquirer')
+const handlebars = require('handlebars')
+const fs = require('fs')
 const templates = {
     'tpl-h5': {
         url: 'https://github.com/lizenghua/vue-tpl-h5',
@@ -16,7 +19,6 @@ const templates = {
     }
 }
 
-// 1. 获取用户输入的命令
 // console.log(process.argv); // 原生的方式，比较麻烦
 program
     .version(require('./package').version)
@@ -32,10 +34,37 @@ program
         const { downloadUrl } = templates[templateName]
         download(downloadUrl, projectName, { clone: true}, err => {
             if(err){
-                console.log('下载失败');
-            }else{
-                console.log('下载成功');
+                return console.log('下载失败');
             }
+            // 把项目下的 package.json 文件读取处理
+            // 使用向导的方式采集用户输入的值
+            
+            
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'name',
+                    message: '请输入项目名称'
+                },
+                {
+                    type: 'input',
+                    name: 'description',
+                    message: '请输入项目简介'
+                },
+                {
+                    type: 'input',
+                    name: 'author',
+                    message: '请输入作者名称'
+                }
+            ]).then( (answers) => {
+                // 使用模板引擎把用户输入的数据解析到 package.json 文件中
+                const packagePath = `./${projectName}/package.json`
+                const packageContent = fs.readFileSync(packagePath, 'utf8')
+                const packageResult = handlebars.compile(packageContent)(answers)
+                // 解析完毕，把解析之后的结果重新写入 package.json 文件中
+                fs.writeFileSync(packagePath, packageResult)
+                console.log("初始化模板成功")
+            })
         })
     })
 
@@ -50,5 +79,3 @@ program
 
 // 解析命令行参数
 program.parse(process.argv);
-
-// 2. 根据不同的命令执行不同的功能操作
