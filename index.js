@@ -8,6 +8,8 @@ const handlebars = require('handlebars')
 const fs = require('fs')
 const ora = require('ora')
 const spinner = ora('正在下载模板...')
+const chalk = require('chalk')
+const logSymbols = require('log-symbols')
 const templates = {
     'tpl-h5': {
         url: 'https://github.com/lizenghua/vue-tpl-h5',
@@ -39,6 +41,7 @@ program
         download(downloadUrl, projectName, { clone: true}, err => {
             if(err){
                 spinner.fail() //下载失败
+                console.log(logSymbols.error, chalk.red(err))
                 return ;
             }
             spinner.succeed() //下载成功
@@ -67,7 +70,7 @@ program
                 const packageResult = handlebars.compile(packageContent)(answers)
                 // 解析完毕，把解析之后的结果重新写入 package.json 文件中
                 fs.writeFileSync(packagePath, packageResult)
-                console.log("初始化模板成功")
+                console.log(logSymbols.success, chalk.yellow("初始化模板成功"))
             })
         })
     })
