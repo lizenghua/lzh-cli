@@ -19,5 +19,8 @@
   "homepage": "https://github.com/lizenghua/lzh-cli#readme",
   "bin": {
     "lzh": "index.js"
+  },
+  "dependencies": {
+    "commander": "^4.0.1"
   }
 }
