@@ -1,7 +1,7 @@
 {
-  "name": "lzh-cli",
-  "version": "1.0.0",
-  "description": "个人搭建的vue简易脚手架工具",
+  "name": "lzh-vue-cli",
+  "version": "2.0.0",
+  "description": "个人搭建的vue脚手架工具",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/lizenghua/lzh-cli#readme",
   "bin": {
-    "lzh": "index.js"
+    "zh": "./bin/main.js"
+  },
+  "engines": {
+    "node": ">=8.9"
   },
   "dependencies": {
     "chalk": "^3.0.0",
@@ -27,6 +30,8 @@
     "handlebars": "^4.5.3",
     "inquirer": "^7.0.0",
     "log-symbols": "^3.0.0",
-    "ora": "^4.0.3"
+    "minimist": "^1.2.0",
+    "ora": "^4.0.3",
+    "semver": "^6.3.0"
   }
 }
