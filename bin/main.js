@@ -6,6 +6,7 @@ const nodeVersion = package.engines.node; // 运行本应用所需的node版本
 const packName = package.name;
 const packVersion = package.version;
 const curNodeVersion = process.version; // 当前系统的node版本
+const enhanceErrorMessages = require('../lib/utils/enhanceErrorMessages'); // 自定义错误提示信息
 
 /**
  * @description: 检测node版本
@@ -58,17 +59,16 @@ program
         )
       );
     }
-    // 创建项目
+    require('../lib/create')(name, options);
   });
 
 program.arguments("<command>").action(cmd => {
   program.outputHelp();
   console.log(`  ` + chalk.red(`Unknown command ${chalk.yellow(cmd)}.`));
 });
-// 自定义错误提示信息
-const errorMessages = require('../lib/utils/errorMessages')
+
 // 缺少参数的错误提示
-errorMessages('missingArgument', argName => {
+enhanceErrorMessages('missingArgument', argName => {
   return `缺少必要参数 ${chalk.yellow(`<${argName}>`)}.`
 })
 
